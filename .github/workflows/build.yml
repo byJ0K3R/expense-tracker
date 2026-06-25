@@ -1,0 +1,25 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build APK with Docker
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/home/user/hostcwd \
+            kivy/buildozer \
+            bash -c "yes | sdkmanager --licenses && yes | sdkmanager 'build-tools;33.0.2' 'platforms;android-33' && buildozer android debug"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: expense-tracker-apk
+          path: bin/*.apk
+          retention-days: 7
+          if-no-files-found: warn
