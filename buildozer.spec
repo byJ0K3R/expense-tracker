@@ -6,7 +6,7 @@ source.dir = .
 source.include_exts = py,kv,db
 version = 1.0
 
-requirements = python3,kivy==2.2.1,sqlite3
+requirements = python3,kivy,sqlite3
 
 orientation = portrait
 
